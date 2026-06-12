@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Abayati Luxury</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --black: #0a0a0a; --white: #ffffff; --gray-100: #f7f7f7;
+  --gray-200: #e8e8e8; --gray-400: #999; --gray-600: #555; --gray-800: #222;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; color: var(--black); background: var(--white); line-height: 1.6; }
+a { text-decoration: none; color: inherit; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--gray-200); padding: 0 48px; height: 72px; display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; }
+.nav-links { display: flex; gap: 40px; list-style: none; }
+.nav-links a { font-size: 13px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; transition: opacity 0.3s; }
+.nav-links a:hover, .nav-links a.active { opacity: 0.5; }
+.nav-cart { position: relative; font-size: 13px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; }
+.cart-count { position: absolute; top: -8px; right: -14px; background: var(--black); color: var(--white); font-size: 10px; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.page-header { padding: 144px 48px 64px; text-align: center; background: var(--gray-100); }
+.page-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 5vw, 56px); font-weight: 400; margin-bottom: 16px; }
+.page-header p { color: var(--gray-600); font-weight: 300; }
+.contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; max-width: 960px; margin: 0 auto; padding: 80px 48px 120px; }
+.contact-info h2 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 400; margin-bottom: 24px; }
+.contact-info > p { color: var(--gray-600); font-weight: 300; margin-bottom: 48px; line-height: 1.8; }
+.methods { margin-bottom: 48px; }
+.method { display: flex; gap: 20px; margin-bottom: 32px; align-items: flex-start; }
+.method-icon { width: 48px; height: 48px; background: var(--gray-100); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.method h4 { font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+.method p { font-size: 14px; color: var(--gray-600); margin-bottom: 0; font-weight: 300; }
+.method a { color: var(--black); text-decoration: underline; text-underline-offset: 3px; }
+.method a:hover { text-decoration: none; }
+.social-links { display: flex; gap: 16px; }
+.social-link { width: 44px; height: 44px; border: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: center; font-size: 18px; transition: all 0.3s; }
+.social-link:hover { background: var(--black); color: var(--white); border-color: var(--black); }
+.contact-form-wrapper { background: var(--gray-100); padding: 48px; }
+.contact-form h3 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 400; margin-bottom: 8px; }
+.contact-form > p { color: var(--gray-600); font-size: 13px; margin-bottom: 32px; font-weight: 300; }
+.contact-form label { display: block; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+.contact-form input, .contact-form textarea, .contact-form select { width: 100%; padding: 14px; border: 1px solid var(--gray-200); font-size: 14px; font-family: inherit; margin-bottom: 20px; background: var(--white); transition: border-color 0.3s; }
+.contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus { outline: none; border-color: var(--black); }
+.contact-form textarea { min-height: 140px; resize: vertical; }
+.contact-form .cta-btn { display: inline-block; padding: 16px 48px; background: var(--black); color: var(--white); font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; border: none; cursor: pointer; transition: all 0.3s; width: 100%; text-align: center; }
+.contact-form .cta-btn:hover { background: var(--gray-800); }
+.form-success { display: none; text-align: center; padding: 40px 0; }
+.form-success h3 { font-family: 'Playfair Display', serif; font-size: 24px; margin-bottom: 12px; }
+.form-success p { color: var(--gray-600); font-weight: 300; }
+.map-section { background: var(--gray-100); padding: 80px 48px; text-align: center; }
+.map-section h2 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 400; margin-bottom: 16px; }
+.map-section p { color: var(--gray-600); font-weight: 300; margin-bottom: 40px; }
+.map-placeholder { max-width: 960px; margin: 0 auto; height: 320px; background: var(--gray-200); display: flex; align-items: center; justify-content: center; color: var(--gray-400); font-size: 14px; letter-spacing: 2px; text-transform: uppercase; }
+footer { background: var(--black); color: var(--white); padding: 80px 48px 40px; }
+.footer-content { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 64px; max-width: 1280px; margin: 0 auto; }
+.footer-brand h3 { font-family: 'Playfair Display', serif; font-size: 20px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; }
+.footer-brand p { color: rgba(255,255,255,0.5); font-size: 13px; font-weight: 300; line-height: 1.8; }
+.footer-col h4 { font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 24px; }
+.footer-col a { display: block; color: rgba(255,255,255,0.5); font-size: 13px; font-weight: 300; margin-bottom: 12px; transition: color 0.3s; }
+.footer-col a:hover { color: var(--white); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); margin-top: 64px; padding-top: 32px; text-align: center; color: rgba(255,255,255,0.3); font-size: 12px; }
+.whatsapp-float { position: fixed; bottom: 32px; right: 32px; width: 56px; height: 56px; background: var(--black); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; transition: transform 0.3s; z-index: 90; text-decoration: none; }
+.whatsapp-float:hover { transform: scale(1.08); }
+@media (max-width: 768px) {
+  nav { padding: 0 20px; } .nav-links { display: none; }
+  .contact-layout { grid-template-columns: 1fr; gap: 48px; padding: 60px 20px 80px; }
+  .page-header { padding: 120px 20px 48px; }
+  .contact-form-wrapper { padding: 32px 24px; }
+  footer { padding: 60px 20px 32px; } .footer-content { grid-template-columns: 1fr 1fr; }
+  .map-section { padding: 60px 20px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Abayati</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="shop.html">Boutique</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <div class="nav-cart">Panier <span class="cart-count" id="cartCount">0</span></div>
+</nav>
+
+<div class="page-header">
+  <h1>Contactez-nous</h1>
+  <p>Une question? Un commande speciale? On est la pour vous.</p>
+</div>
+
+<div class="contact-layout">
+  <div class="contact-info">
+    <h2>Parlons de votre projet</h2>
+    <p>Que ce soit pour une commande personnalisee, une question sur nos produits ou une demande speciale, n'hesitez pas a nous contacter. Nous repondons generalement sous 24h.</p>
+
+    <div class="methods">
+      <div class="method">
+        <div class="method-icon">✆</div>
+        <div>
+          <h4>WhatsApp</h4>
+          <p><a href="https://wa.me/213796905817">+213 796 905 817</a></p>
+          <p style="font-size:12px;color:var(--gray-400);margin-top:4px;">Reponse rapide — de 9h a 21h</p>
+        </div>
+      </div>
+      <div class="method">
+        <div class="method-icon">◎</div>
+        <div>
+          <h4>Instagram</h4>
+          <p><a href="https://instagram.com/abayati_luxuryy" target="_blank">@abayati_luxuryy</a></p>
+          <p style="font-size:12px;color:var(--gray-400);margin-top:4px;">Suivez nos nouveautes</p>
+        </div>
+      </div>
+      <div class="method">
+        <div class="method-icon">✉</div>
+        <div>
+          <h4>Email</h4>
+          <p><a href="mailto:contact@abayati-luxury.com">contact@abayati-luxury.com</a></p>
+          <p style="font-size:12px;color:var(--gray-400);margin-top:4px;">Pour les demandes detaillees</p>
+        </div>
+      </div>
+      <div class="method">
+        <div class="method-icon">◇</div>
+        <div>
+          <h4>Lieu</h4>
+          <p>Oran, Algerie</p>
+          <p style="font-size:12px;color:var(--gray-400);margin-top:4px;">Livraison partout en Algerie</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="social-links">
+      <a href="https://instagram.com/abayati_luxuryy" target="_blank" class="social-link">◎</a>
+      <a href="https://wa.me/213796905817" target="_blank" class="social-link">✆</a>
+      <a href="mailto:contact@abayati-luxury.com" class="social-link">✉</a>
+    </div>
+  </div>
+
+  <div class="contact-form-wrapper">
+    <form class="contact-form" id="contactForm" onsubmit="return handleSubmit(event)">
+      <h3>Envoyez-nous un message</h3>
+      <p>Remplissez le formulaire et vous recontactons rapidement.</p>
+
+      <label for="name">Nom complet</label>
+      <input type="text" id="name" name="name" required placeholder="Votre nom">
+
+      <label for="phone">Telephone / WhatsApp</label>
+      <input type="tel" id="phone" name="phone" placeholder="07XX XX XX XX">
+
+      <label for="subject">Sujet</label>
+      <select id="subject" name="subject">
+        <option value="">Choisir un sujet</option>
+        <option value="commande">Passer une commande</option>
+        <option value="sur-mesure">Demande sur mesure</option>
+        <option value="info">Question sur un produit</option>
+        <option value="retour">Retour / Echange</option>
+        <option value="autre">Autre</option>
+      </select>
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" required placeholder="Decrivez votre demande..."></textarea>
+
+      <button type="submit" class="cta-btn">Envoyer le message</button>
+    </form>
+
+    <div class="form-success" id="formSuccess">
+      <h3>Message envoyé ✓</h3>
+      <p>Merci! Nous vous recontacterons dans les plus brefs delais.</p>
+    </div>
+  </div>
+</div>
+
+<div class="map-section">
+  <h2>Nous trouver</h2>
+  <p>Oran, Algerie — Livraison disponible partout en Algerie et a l'international</p>
+  <div class="map-placeitable">Carte disponible prochainement</div>
+</div>
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-brand">
+      <h3>Abayati</h3>
+      <p>Abayas raffinées pour la femme moderne. Élégance, qualité et savoir-faire.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Boutique</h4>
+      <a href="shop.html">Toutes les abayas</a>
+      <a href="shop.html">Nouveautés</a>
+      <a href="shop.html">Bestsellers</a>
+    </div>
+    <div class="footer-col">
+      <h4>Informations</h4>
+      <a href="contact.html">Contact</a>
+      <a href="#">Livraison</a>
+      <a href="#">Retours</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="https://wa.me/213796905817">WhatsApp: +213 796 905 817</a>
+      <a href="https://instagram.com/abayati_luxuryy">Instagram: @abayati_luxuryy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 Abayati Luxury. Tous droits réservés.
+  </div>
+</footer>
+
+<a href="https://wa.me/213796905817" class="whatsapp-float" target="_blank">✆</a>
+
+<script>
+// Cart count from localStorage
+const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+document.getElementById('cartCount').textContent = cart.length;
+
+// Form submit
+function handleSubmit(e) {
+  e.preventDefault();
+  const form = document.getElementById('contactForm');
+  const success = document.getElementById('formSuccess');
+
+  // Collect form data
+  const data = {
+    name: document.getElementById('name').value,
+    phone: document.getElementById('phone').value,
+    subject: document.getElementById('subject').value,
+    message: document.getElementById('message').value,
+    time: new Date().toISOString()
+  };
+
+  // Save to localStorage (in production this would go to a server)
+  const messages = JSON.parse(localStorage.getItem('abayati_messages') || '[]');
+  messages.push(data);
+  localStorage.setItem('abayati_messages', JSON.stringify(messages));
+
+  // Also try to open WhatsApp with the message
+  const waMsg = `Nouveau message de ${data.name} (${data.phone})\nSujet: ${data.subject}\n\n${data.message}`;
+  window.open(`https://wa.me/213796905817?text=${encodeURIComponent(waMsg)}`, '_blank');
+
+  form.style.display = 'none';
+  success.style.display = 'block';
+  return false;
+}
+</script>
+</body>
+</html>
