@@ -126,16 +126,59 @@ nav {
 .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; max-width: 960px; margin: 0 auto; }
 .value-item { text-align: center; padding: 44px 28px; background: var(--gray-50); border-radius: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.04); transition: all 0.3s; }
 .value-item:hover { transform: translateY(-4px); box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.08), 0 16px 40px rgba(0,0,0,0.05); background: var(--white); }
-.value-icon { width: 60px; height: 60px; background: var(--white); border-radius: 18px; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04); }
-.value-icon svg { width: 26px; height: 26px; stroke: var(--black); fill: none; stroke-width: 1.5; }
+.value-icon { width: 64px; height: 64px; background: var(--white); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04); }
+.value-icon svg { width: 30px; height: 30px; }
 .value-item h3 { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
 .value-item p { color: var(--gray-600); font-size: 13px; font-weight: 300; line-height: 1.8; }
 
-/* ─── INSTAGRAM ────────────────────────────────────────────────────────────── */
-.ig-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; max-width: 960px; margin: 0 auto; }
-.ig-item { aspect-ratio: 1; background: var(--gray-200); overflow: hidden; border-radius: 20px; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.08); transition: all 0.3s; }
-.ig-item:hover { opacity: 0.85; transform: translateY(-3px); box-shadow: 0 2px 6px rgba(0,0,0,0.08), 0 8px 20px rgba(0,0,0,0.12); }
+/* ─── INSTAGRAM REELS CAROUSEL ─────────────────────────────────────────────── */
+.ig-carousel { overflow: hidden; max-width: 100%; position: relative; }
+.ig-carousel::before,
+.ig-carousel::after {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 60px; z-index: 2; pointer-events: none;
+}
+.ig-carousel::before { right: 0; background: linear-gradient(to left, var(--gray-100), transparent); }
+.ig-carousel::after { left: 0; background: linear-gradient(to right, var(--gray-100), transparent); }
+.ig-track {
+  display: flex; gap: 16px;
+  animation: igScroll 20s linear infinite;
+  width: max-content;
+}
+.ig-track:hover { animation-play-state: paused; }
+@keyframes igScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.ig-item {
+  flex-shrink: 0; width: 280px; aspect-ratio: 9/16;
+  background: var(--gray-200); overflow: hidden; border-radius: 20px;
+  cursor: pointer; position: relative;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.04);
+  transition: all 0.3s;
+}
+.ig-item:hover {
+  opacity: 0.9; transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.12), 0 16px 40px rgba(0,0,0,0.06);
+}
 .ig-item img { width: 100%; height: 100%; object-fit: cover; }
+.ig-item .reel-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 40%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 16px; opacity: 0; transition: opacity 0.3s;
+}
+.ig-item:hover .reel-overlay { opacity: 1; }
+.ig-item .reel-icon {
+  position: absolute; top: 12px; left: 12px;
+  width: 32px; height: 32px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.ig-item .reel-icon svg { width: 16px; height: 16px; fill: var(--black); }
+.ig-item .reel-views { color: var(--white); font-size: 12px; font-weight: 500; display: flex; align-items: center; gap: 6px; }
+.ig-item .reel-views svg { width: 14px; height: 14px; fill: var(--white); }
 
 /* ─── FOOTER ───────────────────────────────────────────────────────────────── */
 footer { background: var(--black); color: var(--white); padding: 64px 48px 32px; box-shadow: 0 -4px 16px rgba(0,0,0,0.1); }
@@ -169,12 +212,12 @@ footer { background: var(--black); color: var(--white); padding: 64px 48px 32px;
   .nav-links { display: none; position: fixed; top: 64px; right: 0; left: 0; background: var(--white); flex-direction: column; padding: 20px; gap: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); border-radius: 0 0 20px 20px; }
   .nav-links.open { display: flex; }
   .nav-toggle { display: block; }
-  section, .sec-products, .sec-values, .sec-instagram { padding: 64px 20px; }
+  .sec-products, .sec-values, .sec-instagram { padding: 64px 20px; }
   .featured-grid { grid-template-columns: 1fr; }
   .featured-text { padding: 48px 24px; order: 2; text-align: center; }
   .featured-image { order: 1; min-height: 360px; }
   .values-grid { grid-template-columns: 1fr; gap: 20px; max-width: 400px; }
-  .ig-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .ig-item { width: 200px; }
   .products-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
   .product-card { border-radius: 18px; }
   .product-info { padding: 14px; }
@@ -249,7 +292,7 @@ footer { background: var(--black); color: var(--white); padding: 64px 48px 32px;
   </div>
   <div class="values-grid">
     <div class="value-item">
-      <div class="value-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+      <div class="value-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
       <h3>أقمشة فاخرة</h3>
       <p>مواد نخبوية مختارة بعناية لراحة ومتانة استثنائية.</p>
     </div>
@@ -259,24 +302,23 @@ footer { background: var(--black); color: var(--white); padding: 64px 48px 32px;
       <p>كل قطعة قابلة للتعديل حسب تفضيلاتك للحصول على مقاس مثالي.</p>
     </div>
     <div class="value-item">
-      <div class="value-icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+      <div class="value-icon"><svg viewBox="0 0 24 24"><path d="M1 3h15v13H1zM16 8h4l3 5v3h-7V8z"/><circle cx="6.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
       <h3>توصيل أنيق</h3>
       <p>تغليف أنيق وتوصيل سريع في جميع أنحاء الجزائر.</p>
     </div>
   </div>
 </section>
 
-<!-- INSTAGRAM -->
+<!-- INSTAGRAM REELS -->
 <section class="sec-instagram">
   <div class="section-title">
     <h2>تابعونا على انستغرام</h2>
     <p>@abayati_luxuryy</p>
   </div>
-  <div class="ig-grid">
-    <div class="ig-item"><img src="https://images.unsplash.com/photo-1594552072238-b8a33785b261?w=400&h=400&fit=crop" loading="lazy"></div>
-    <div class="ig-item"><img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=400&h=400&fit=crop" loading="lazy"></div>
-    <div class="ig-item"><img src="https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=400&h=400&fit=crop" loading="lazy"></div>
-    <div class="ig-item"><img src="https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda?w=400&h=400&fit=crop" loading="lazy"></div>
+  <div class="ig-carousel">
+    <div class="ig-track" id="igTrack">
+      <!-- Items will be duplicated by JS for infinite scroll -->
+    </div>
   </div>
 </section>
 
@@ -351,6 +393,44 @@ function addToCart(id) {
 renderProducts('homeProducts', products);
 const cart = JSON.parse(localStorage.getItem('cart') || '[]');
 document.getElementById('cartCount').textContent = cart.length;
+
+// ─── INSTAGRAM REELS CAROUSEL ────────────────────────────────────────────────
+const reels = [
+  { img: 'https://images.unsplash.com/photo-1594552072238-b8a33785b261?w=400&h=711&fit=crop', views: '12K' },
+  { img: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=400&h=711&fit=crop', views: '8.5K' },
+  { img: 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=400&h=711&fit=crop', views: '15K' },
+  { img: 'https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda?w=400&h=711&fit=crop', views: '20K' },
+  { img: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400&h=711&fit=crop', views: '10.2K' },
+  { img: 'https://images.unsplash.com/photo-1612423284934-2850a4ea6b0f?w=400&h=711&fit=crop', views: '6.8K' },
+  { img: 'https://images.unsplash.com/photo-1618932433432-e7c6e4981b9e?w=400&h=711&fit=crop', views: '18K' },
+  { img: 'https://images.unsplash.com/photo-1596436889106-be35e843f974?w=400&h=711&fit=crop', views: '9.1K' }
+];
+
+function buildIgCarousel() {
+  const track = document.getElementById('igTrack');
+  if (!track) return;
+
+  const reelIcon = `<svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z" fill="none"/><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>`;
+  const eyeIcon = `<svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
+
+  let html = '';
+  // Duplicate items for infinite scroll
+  const items = [...reels, ...reels];
+  items.forEach(r => {
+    html += `
+      <div class="ig-item" onclick="window.open('https://instagram.com/abayati_luxuryy','_blank')">
+        <img src="${r.img}" alt="Reel" loading="lazy">
+        <div class="reel-icon">${reelIcon}</div>
+        <div class="reel-overlay">
+          <div class="reel-views">${eyeIcon} ${r.views}</div>
+        </div>
+      </div>
+    `;
+  });
+  track.innerHTML = html;
+}
+
+buildIgCarousel();
 </script>
 </body>
 </html>
